@@ -2,49 +2,45 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
-#define SIZE 27 // max size of array (-n -e \\x--\\x--\\x--\\x-- + '\0')
-#define START_INDEX 6 // skip -n -e in string
+#define SIZE 27 // 배열의 최대 크기 입니다. 마지막에 널 문자를 고려하였습니다. (-n -e \\x--\\x--\\x--\\x-- + '\0')
+#define START_INDEX 6 // 16진수로 계산하기 위해, 바이너리 파일을 불러올 때 남게 되는 "-n -e " 인덱스를 건너 뛰기 위한 숫자입니다. 
 
-// convert string to hex value
+// 바이너리 파일을 읽어서 나온 문자열을 16진수로 변환합니다. 
 uint32_t stoh(char str[]);
-// remove all non hex value('\', 'x', etc..)
+// 16진수 값이 아닌 값들을 문자열에서 제거합니다.('\', 'x', etc..)
 void clear_str(char str[]);
 
 int main(int argc, char* argv[])
 
 {
-	// array for argv[1]
+	// argv[1]을 위한 배열입니다. 
 	char str1[SIZE];
-	// array for argv[2]
+	// argv[2]를 위한 배열입니다. 
 	char str2[SIZE];
 	
 	FILE *fp1 = NULL;
 	FILE *fp2 = NULL;
 	
-	// open bin file 
+	// echo -n -e 명령어로 생성된 바이너리 파일을 엽니다. 
 	fp1 = fopen(argv[1], "rb");
 	fp2 = fopen(argv[2], "rb");
 	
-	// read bin file
+	// 바이너리 파일을 읽어 str1, str2에 각각 저장합니다. 
 	fread(str1, sizeof(char), SIZE, fp1);
 	fread(str2, sizeof(char), SIZE, fp2);
 	
-	// remove all non hex value('\', 'x', etc..) for plus operation
+	// 16진수의 연산을 위해서 문자열을 16진수 숫자로 변환하기 전에, 0~9 / a~f / A~F만 남깁니다. 
 	clear_str(str1);
 	clear_str(str2);
-
-	// variable for converted value
-	uint32_t hex1 = 0;
-	uint32_t hex2 = 0;
 	
-	// convert string to hex value
-	hex1 = stoh(str1);
-	hex2 = stoh(str2);
+	// 문자열을 16진수 숫자로 바꿔주는 함수 stoh를 이용하여 hex1, hex2에 16진수 숫자를 저장합니다. 
+	uint32_t hex1 = stoh(str1);
+	uint32_t hex2 = stoh(str2);
 
-	// plus operation by converted two argv
+	// 과제의 조건인 두 16진수의 합 연산을 실행하여 result 변수에 저장합니다. 
 	uint32_t result = hex1 + hex2;
 	
-	// print result(decimal, hexadecimal)
+	// 결과 값을 10진수와 16진수로 출력합니다. 
 	printf("%d(%#x) + %d(%#x) = %d(%#x)\n", hex1, hex1, hex2, hex2, result, result);
 	
 	fclose(fp2);
@@ -60,29 +56,33 @@ uint32_t stoh(char str[])
 	
 	for(i=0; str[i] != '\0'; i++)
 	{
-		// character number - '0' => number
-		// in hexadecimal, positional number + 1 => *16 
+		// 문자로 된 숫자에서 '0'을 빼면 숫자가 되는 것을 이용합니다. 
+		// 또한, 앞의 자리부터 연산하므로 각 연산시마다 전 값에 *16을 하여 16진수에 대한 자릿수를 맞춰줍니다. 
 		if(str[i] >= '0' && str[i] <= '9') 
 		{	
 			hex = hex * 16 + str[i] - '0'; 
 		}
-		// 깃허브에 한글 테스트
+		// 대문자 A~F가 포함되었을 때, 16진수에서 A = 10이므로, 이에 맞게 변환해줍니다.
+		// 또한, 앞의 자리부터 연산하므로 각 연산시마다 전 값에 *16을 하여 16진수에 대한 자릿수를 맞춰줍니다.  
 		else if(str[i] >= 'A' && str[i] <= 'F') 
 		{	
 			
 			hex = hex * 16 + str[i] - 'A' + 10; 
 		}
-		
+		// 소문자 a~f가 포함되었을 때, 16진수에서 A = 10이므로 이에 맞게 변환해줍니다. 
+		// 또한, 앞의 자리부터 연산하므로 각 연산시마다 전 값에 *16을 하여 16진수에 대한 자릿수를 맞춰줍니다. 
 		else if(str[i] >= 'a' && str[i] <= 'f') 
 		{
 			hex = hex * 16 + str[i] - 'a' + 10; 
 		}
+		// 이 외의 경우는 잘못된 값이 포함된 것이므로 오류 메시지를 출력하고 프로그램을 종료합니다. 
 		else
 		{
 			fprintf(stderr, "input is wrong"); 
 			exit(1);	
 		}
 	}
+	// 계산된 16진수 값을 리턴합니다. 
 	return hex;
 }
 
@@ -91,7 +91,7 @@ void clear_str(char str[])
 	int i,j;
 	char temp[SIZE] = {0,};
 	
-	// only read '0'~'9' and 'a'~'f' and 'A'~'F'
+	// 문자 '0'~'9', 'a'~'f', 'A'~'F'만 읽어들여 temp에 저장합니다. 
 	for(i=START_INDEX, j = 0; str[i] != '\0'; i++)
 	{
 		if((str[i] >= '0' && str[i] <= '9') || (str[i] >= 'a' && str[i] <= 'f') || (str[i] >= 'A' && str[i] <= 'F'))
@@ -99,11 +99,9 @@ void clear_str(char str[])
 			temp[j++] = str[i];
 		}
 	}
-	// add NULL in last index
+	// temp의 문자열이 끝나는 위치에 NULL 문자를 추가합니다. 
 	temp[j] = '\0';
 	
-	// copy temp's memory to original string
-	memcpy(str, temp, SIZE+1);
+	// 문자 '0'~'9', 'a'~'f', 'A'~'F'만으로 구성된 temp를 원본 문자열에 복사합니다. 
+	memcpy(str, temp, SIZE);
 }
-
-		
