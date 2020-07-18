@@ -5,8 +5,8 @@
 #define SIZE 27
 #define START_INDEX 6 
 
-uint32_t stoh(char str[])
-void clear_str(char str[])
+uint32_t stoh(char str[]);
+void clear_str(char str[]);
 
 int main(int argc, char* argv[])
 
