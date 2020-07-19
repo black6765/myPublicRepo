@@ -6,9 +6,6 @@
 int main(int argc, char* argv[])
 
 {
-	uint32_t buffer1;
-	uint32_t buffer2;
-	
 	FILE *fp1 = NULL;
 	FILE *fp2 = NULL;
 	
