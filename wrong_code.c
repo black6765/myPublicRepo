@@ -1,3 +1,5 @@
+// 잘못된 파일 코드 저장용입니다.
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
