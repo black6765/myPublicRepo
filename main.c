@@ -4,7 +4,6 @@
 #include "add_nbo.h"
 
 int main(int argc, char* argv[])
-
 {
 	FILE *fp1 = NULL;
 	FILE *fp2 = NULL;

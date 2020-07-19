@@ -11,7 +11,6 @@ void add_nbo(FILE *fp1, FILE *fp2)
 	// read bin file
 	fread(&buffer1, sizeof(uint32_t), 4, fp1);
 	fread(&buffer2, sizeof(uint32_t), 4, fp2);
-	printf("==debug==\n%d(%x)\n%d(%x)\n", buffer1, buffer1, buffer2, buffer2);
 	
 	uint32_t n1 = ntohl(buffer1);
 	uint32_t n2 = ntohl(buffer2);
