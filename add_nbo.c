@@ -3,15 +3,15 @@
 #include <stdint.h>
 #include <netinet/in.h>
 #include "add_nbo.h"
-#define LEN 8 // bin file's length(8 bytes)
+
 
 void add_nbo(FILE *fp1, FILE *fp2)
 {
 	uint32_t buffer1;
 	uint32_t buffer2;
 	// read bin file
-	fread(&buffer1, sizeof(uint32_t), LEN, fp1);
-	fread(&buffer2, sizeof(uint32_t), LEN, fp2);
+	fread(&buffer1, sizeof(uint32_t), 1, fp1);
+	fread(&buffer2, sizeof(uint32_t), 1, fp2);
 	
 	// Convert Network Byte Order to Host Byte Order for add operation
 	uint32_t n1 = ntohl(buffer1);
