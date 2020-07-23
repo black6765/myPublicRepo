@@ -69,53 +69,56 @@ int main(int argc, char* argv[]) {
 	printf("\nEthernet Header\n");
 	
 	memcpy(e_hdr.mac_dest, packet, 6);
-	printf("\nDEST MAC : ");
+	printf("\nDestination MAC Address : ");
 	for(i=0; i<6; i++)
 		printf("%02x ", e_hdr.mac_dest[i]);
 	
 	memcpy(e_hdr.mac_src, packet+6, 6);
-	printf("\nSRC MAC : ");
+	printf("\nSource MAC Address : ");
 	for(i=0; i<6; i++)
 		printf("%02x ", e_hdr.mac_src[i]);
 	
 	memcpy(e_hdr.eth_type, packet+12, 2);
-	printf("\nETH TYPE : ");
+	printf("\nEthernet Type : ");
 	for(i=0; i<2; i++)
 		printf("%02x ", e_hdr.eth_type[i]);
 		
 	printf("\n\nIPv4 Header\n");		
 	
 	memcpy(&ip_hdr.ip_ver_hl, packet+14, 1);
-	printf("\nIP Version and Header length : ");
+	printf("\nIP Version and Header length : "); // to do : split version / header length 
 	for(i=0; i<1; i++)
 		printf("%02x ", ip_hdr.ip_ver_hl);
 		
 	memcpy(ip_hdr.src_ip, packet+26, 4);
-	printf("\nSRC IP : ");
+	printf("\nSource IP Address : ");
 	for(i=0; i<4; i++)
 		printf("%d.", ip_hdr.src_ip[i]);
 		
 	memcpy(ip_hdr.dest_ip, packet+30, 4);
-	printf("\nDEST IP : ");
+	printf("\nDestination IP Address : ");
 	for(i=0; i<4; i++)
 		printf("%d.", ip_hdr.dest_ip[i]);
 		
 	printf("\n\nTCP Header\n");
 	
 	memcpy(&t_hdr.src_port, packet+34, 2);
-	printf("\nSRC PORT : ");
+	printf("\nSource Port Number : ");
 	printf("%u(%#x) ", ntohs(t_hdr.src_port), ntohs(t_hdr.src_port));
 	
 	memcpy(&t_hdr.dest_port, packet+36, 2);
-	printf("\nDEST PORT : ");
+	printf("\nDestination Port Number : ");
 	printf("%u(%#x) ", ntohs(t_hdr.dest_port), ntohs(t_hdr.dest_port));
 	
-	printf("\nTCP PAYLOAD : ");
+	memcpy(&t_hdr.payload, packet+54, 16); // to do : handling when empty payload case
+	printf("\nTcp Payload : ");
 	for(i=0; i<16; i++)
 		printf("%02x ", t_hdr.payload[i]);
-	memcpy(&t_hdr.payload, packet+54, 16);
+	
             
         printf("\n%u bytes captured\n", header->caplen);
+        
+        printf("\n====================================================\n");
     }
 
     pcap_close(handle);
