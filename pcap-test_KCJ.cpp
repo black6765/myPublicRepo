@@ -19,16 +19,16 @@
 
 struct eth_hdr
 {
-    uint8_t src_eth[ETHER_ADDR_LEN]; // destination ethernet address
-    uint8_t dest_eth[ETHER_ADDR_LEN]; // source ethernet address
-    uint16_t eth_type;
+    uint8_t mac_src[ETHER_ADDR_LEN]; // MAC Source
+    uint8_t mac_dest[ETHER_ADDR_LEN]; // MAC Destination 
+    uint16_t eth_type; // Ether type
 };
 
 struct ipv4_hdr
 {
-    uint8_t ip_ver_hl;
-    uint8_t src_ip[IP_ADDR_LEN];
-    uint8_t dest_ip[IP_ADDR_LEN];
+    uint8_t ip_ver_hl; // Version and IHL
+    uint8_t src_ip[IP_ADDR_LEN]; // Source IP Address
+    uint8_t dest_ip[IP_ADDR_LEN]; // Destination IP Address
 
 };
 
@@ -73,40 +73,43 @@ int main(int argc, char* argv[]) {
             printf("pcap_next_ex return %d(%s)\n", res, pcap_geterr(handle));
             break;
         }
-        for(i=0; i<EOI; i++)
-        {
-            if(DEST_ETH_RANGE(i))
-                e_hdr.dest_eth[index++] = packet[i];
-            index = 0;
-            if(SRC_ETH_RANGE(i))
-                e_hdr.src_eth[index++] = packet[i];
-            index = 0;
-            if(ETH_TYPE_RANGE(i))
-                e_hdr.eth_type = packet[i];
-            if(IP_VER_HL_RANGE(i))
-                ip_hdr.ip_ver_hl = packet[i];
 
-            if(SCR_IP_RANGE(i))
-                ip_hdr.src_ip[index++] = packet[i];
-            index = 0;
-            if(DEST_IP_RANGE(i))
-                ip_hdr.dest_ip[index++] = packet[i];
-            index = 0;
-            if(SRC_PORT_RANGE(i))
-                t_hdr.src_port = packet[i];
-            if(DEST_PORT_RANGE(i))
-                t_hdr.dest_port = packet[i];
-            if(PAYLOAD_RANGE(i))
-                t_hdr.payload[index++] = packet[i];
+	printf("Ethernet Header\n");
+        printf("\nDEST MAC : ");
+        for(i=0; i<=5; i++)
+            printf("%02x ", packet[i]);
+        printf("\nSRC MAC : ");
+        for(i=6; i<=11; i++)
+            printf("%02x ", packet[i]);
+        printf("\nETH TYPE : ");
+        for(i=12; i<=13; i++)
+            printf("%02x ", packet[i]);
+        
+    	printf("IPv4 Header\n");	
+        printf("\nIP Version and Header length : ");
+        printf("%02x ", packet[14]);
+        printf("\nSRC IP : ");
+        for(i=26; i<=29; i++)
+            printf("%d.", packet[i]);
+	printf("\b\b");
+        printf("\nDEST IP : ");
+        for(i=30; i<=33; i++)
+            printf("%d.", packet[i]);
+        printf("\b\b");
 
-        }
-        for(i=0; i<6; i++)
-        	printf("%x", e_hdr.src_eth[i]);
-        for(i=0; i<6; i++)
-        	printf("%x", e_hdr.dest_eth[i]);
+	printf("TCP Header\n");
+        printf("\nSRC PORT : ");
+        for(i=34; i<=35; i++)
+            printf("%02x ", packet[i]);
+        printf("\nDEST PORT : ");
+        for(i=36; i<=37; i++)
+            printf("%02x ", packet[i]);
+      	printf("\nTCP PAYLOAD : ");
+	for(i=54; i<=69; i++)
+            printf("%02x ", packet[i]);
+            
         printf("%u bytes captured\n", header->caplen);
     }
 
     pcap_close(handle);
 }
-
