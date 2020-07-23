@@ -1,21 +1,12 @@
 #include <pcap.h>
 #include <stdio.h>
-#include <stdlib.h>
+#include <cstring>
 #include <stdint.h>
 
 #define ETHER_ADDR_LEN 6
 #define IP_ADDR_LEN 4
 #define PAYLOAD_LEN 8
-#define DEST_ETH_RANGE(x) (((x) >= (0)) && ((x) <= (5)))
-#define SRC_ETH_RANGE(x) (((x) >= (6)) && ((x) <= (11)))
-#define ETH_TYPE_RANGE(x) (((x) >= (12)) && ((x) <= (13)))
-#define IP_VER_HL_RANGE(x) ((x) == (14))
-#define SCR_IP_RANGE(x) (((x) >= (26)) && ((x) <= (29)))
-#define DEST_IP_RANGE(x) (((x) >= (30)) && ((x) <= (33)))
-#define SRC_PORT_RANGE(x) (((x) >= (34)) && ((x) <= (35)))
-#define DEST_PORT_RANGE(x) (((x) >= (36)) && ((x) <= (37)))
-#define PAYLOAD_RANGE(x) (((x) >= (54)) && ((x) <= (69)))
-#define EOI 69
+
 
 struct eth_hdr
 {
@@ -74,6 +65,11 @@ int main(int argc, char* argv[]) {
             break;
         }
 
+	memcpy(e_hdr.mac_src, packet, 6);
+	
+	for(i=0; i<6; i++)
+	printf("%02x", e_hdr.mac_src[i]);
+	
 	printf("\nEthernet Header\n");
         printf("\nDEST MAC : ");
         for(i=0; i<=5; i++)
