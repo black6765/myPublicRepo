@@ -74,7 +74,7 @@ int main(int argc, char* argv[]) {
             break;
         }
 
-	printf("Ethernet Header\n");
+	printf("\nEthernet Header\n");
         printf("\nDEST MAC : ");
         for(i=0; i<=5; i++)
             printf("%02x ", packet[i]);
@@ -85,19 +85,17 @@ int main(int argc, char* argv[]) {
         for(i=12; i<=13; i++)
             printf("%02x ", packet[i]);
         
-    	printf("IPv4 Header\n");	
+    	printf("\n\nIPv4 Header\n");	
         printf("\nIP Version and Header length : ");
         printf("%02x ", packet[14]);
         printf("\nSRC IP : ");
         for(i=26; i<=29; i++)
             printf("%d.", packet[i]);
-	printf("\b\b");
         printf("\nDEST IP : ");
         for(i=30; i<=33; i++)
             printf("%d.", packet[i]);
-        printf("\b\b");
 
-	printf("TCP Header\n");
+	printf("\n\nTCP Header\n");
         printf("\nSRC PORT : ");
         for(i=34; i<=35; i++)
             printf("%02x ", packet[i]);
@@ -108,7 +106,7 @@ int main(int argc, char* argv[]) {
 	for(i=54; i<=69; i++)
             printf("%02x ", packet[i]);
             
-        printf("%u bytes captured\n", header->caplen);
+        printf("\n%u bytes captured\n", header->caplen);
     }
 
     pcap_close(handle);
