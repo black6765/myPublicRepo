@@ -8,6 +8,7 @@
 #define IP_ADDR_LEN 4
 #define PAYLOAD_LEN 8
 #define ETHER_TYPE_LEN 2
+#define MAX(x, y) (((x) > (y)) ? (x) : (y))
 
 struct eth_hdr
 {
@@ -21,6 +22,7 @@ struct ipv4_hdr
     uint8_t ip_ver_hl; // Version and IHL
     uint8_t src_ip[IP_ADDR_LEN]; // Source IP Address
     uint8_t dest_ip[IP_ADDR_LEN]; // Destination IP Address
+    uint16_t total_len;
 
 };
 
@@ -53,6 +55,7 @@ int main(int argc, char* argv[]) {
     }
 
     while (true) {
+
         struct pcap_pkthdr* header;
         struct eth_hdr e_hdr;
         struct ipv4_hdr ip_hdr;
@@ -65,6 +68,8 @@ int main(int argc, char* argv[]) {
             printf("pcap_next_ex return %d(%s)\n", res, pcap_geterr(handle));
             break;
         }
+        if(packet[23] != 0x06)
+        	continue;
 	
 	printf("\nEthernet Header\n");
 	
@@ -89,6 +94,10 @@ int main(int argc, char* argv[]) {
 	printf("\nIP Version and Header length : "); // to do : split version / header length 
 	for(i=0; i<1; i++)
 		printf("%02x ", ip_hdr.ip_ver_hl);
+	uint8_t ip_hl = (ip_hdr.ip_ver_hl % 16) * 4;
+	uint8_t ip_ver = ip_hdr.ip_ver_hl / 16;
+	printf("\nIP Version : %u\n", ip_ver);
+	printf("IP Header Length : %u\n", ip_hl); 
 		
 	memcpy(ip_hdr.src_ip, packet+26, 4);
 	printf("\nSource IP Address : ");
@@ -110,11 +119,17 @@ int main(int argc, char* argv[]) {
 	printf("\nDestination Port Number : ");
 	printf("%u(%#x) ", ntohs(t_hdr.dest_port), ntohs(t_hdr.dest_port));
 	
-	memcpy(&t_hdr.payload, packet+54, 16); // to do : handling when empty payload case
-	printf("\nTcp Payload : ");
-	for(i=0; i<16; i++)
-		printf("%02x ", t_hdr.payload[i]);
+	memcpy(&ip_hdr.total_len, packet+16, 2);
 	
+	uint8_t tcp_hl = (packet[46] / 16) * 4;
+	uint8_t tcp_payload_len = ntohs(ip_hdr.total_len) - ip_hl - tcp_hl;
+	printf("\nTotal Length(%u) - IP Header Length(%u) - TCP Header Length(%u) = %u", ntohs(ip_hdr.total_len), ip_hl, tcp_hl, tcp_payload_len);
+	int memcpy_len = MAX(tcp_payload_len, 16);
+	memcpy(&t_hdr.payload, packet+54, memcpy_len); // to do : handling when empty payload case
+	printf("\nTcp Payload : ");
+	for(i=0; i<memcpy_len; i++)
+		printf("%02x ", t_hdr.payload[i]);
+		
             
         printf("\n%u bytes captured\n", header->caplen);
         
