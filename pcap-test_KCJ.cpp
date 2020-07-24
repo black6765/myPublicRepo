@@ -8,7 +8,7 @@
 #define IP_ADDR_LEN 4
 #define PAYLOAD_LEN 8
 #define ETHER_TYPE_LEN 2
-#define MAX(x, y) (((x) > (y)) ? (x) : (y))
+#define MIN(x, y) (((x) < (y)) ? (x) : (y))
 
 struct eth_hdr
 {
@@ -124,12 +124,28 @@ int main(int argc, char* argv[]) {
 	uint8_t tcp_hl = (packet[46] / 16) * 4;
 	uint8_t tcp_payload_len = ntohs(ip_hdr.total_len) - ip_hl - tcp_hl;
 	printf("\nTotal Length(%u) - IP Header Length(%u) - TCP Header Length(%u) = %u", ntohs(ip_hdr.total_len), ip_hl, tcp_hl, tcp_payload_len);
-	int memcpy_len = MAX(tcp_payload_len, 16);
-	memcpy(&t_hdr.payload, packet+54, memcpy_len); // to do : handling when empty payload case
+	int min_len = MIN(tcp_payload_len, 16);
+	memcpy(&t_hdr.payload, packet+54, min_len); // to do : handling when empty payload case
 	printf("\nTcp Payload : ");
-	for(i=0; i<memcpy_len; i++)
-		printf("%02x ", t_hdr.payload[i]);
-		
+	
+	if(tcp_payload_len == 0)
+	{
+		for(i=54; i<60; i++) 
+		{
+			if(packet[i] == 0x00)
+			{
+				printf("%02x ", packet[i]);
+				continue;
+			}
+			else
+				break;
+		}
+	}
+	else
+	{
+		for(i=0; i<min_len; i++)
+			printf("%02x ", t_hdr.payload[i]);
+	}	
             
         printf("\n%u bytes captured\n", header->caplen);
         
