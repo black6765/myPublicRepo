@@ -1,3 +1,5 @@
+// [BOB9][Kim Cheong-Jun][pcap-programming]
+
 #include <pcap.h>
 #include <stdio.h>
 #include <cstring>
@@ -35,12 +37,15 @@ int main(int argc, char* argv[]) {
             printf("pcap_next_ex return %d(%s)\n", res, pcap_geterr(handle));
             break;
         }
+
+	// Check TCP Packet
         if(packet[23] != 0x06)
         	continue;
         
+	// Print TCP Packet Information
         pcap_KCJ(packet);
         
-            
+        // Print Captured Bytes 
         printf("\n%u bytes captured\n", header->caplen);
         
         printf("\n====================================================\n");
