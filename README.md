@@ -3,12 +3,12 @@
 프로그램 구성 의도 및 설명
 ==================
 * 과제 요구 사항 
-  1. "TCP 패킷이 잡히는 경우에만" 정보를 출력
-  2. "각각의 헤더에 있는 특정 정보"를 출력
-    - Ethernet Header의 src mac / dst mac
-    - IP Header의 src ip / dst ip
-    - TCP Header의 src port / dst port
-    - Payload(Data)의 hexadecimal value(최대 16바이트까지만)
+    1. "TCP 패킷이 잡히는 경우에만" 정보를 출력
+    2. "각각의 헤더에 있는 특정 정보"를 출력
+      - Ethernet Header의 src mac / dst mac
+      - IP Header의 src ip / dst ip
+      - TCP Header의 src port / dst port
+      - Payload(Data)의 hexadecimal value(최대 16바이트까지만)
 
 * 과제 요구 사항에 대한 코드 구성
 
