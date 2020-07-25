@@ -109,7 +109,7 @@ void pcap_KCJ(const u_char* packet)
 	
 	// Print TCP Payload 16 bytes
 	memcpy(&t_hdr.payload, packet+54, 16); 
-	printf("\nTcp Payload : ");
+	printf("\nTCP Payload : ");
 	for(i=0; i<16; i++)
 			printf("%02x ", t_hdr.payload[i]);
 

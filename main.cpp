@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) {
         pcap_KCJ(packet);
         
         // Print Captured Bytes 
-        printf("\n%u bytes captured\n", header->caplen);
+        printf("\n\n%u bytes captured\n", header->caplen);
         
         printf("\n====================================================\n");
     }
