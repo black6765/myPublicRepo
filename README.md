@@ -1,14 +1,14 @@
 ## pcap-test
 
-프로그램 구성 의도
+프로그램 구성 의도 및 설명
 ==================
 * 과제 요구 사항 
-1. "TCP 패킷이 잡히는 경우에만" 정보를 출력
-2. "각각의 헤더에 있는 특정 정보"를 출력
-  - Ethernet Header의 src mac / dst mac
-  - IP Header의 src ip / dst ip
-  - TCP Header의 src port / dst port
-  - Payload(Data)의 hexadecimal value(최대 16바이트까지만)
+  1. "TCP 패킷이 잡히는 경우에만" 정보를 출력
+  2. "각각의 헤더에 있는 특정 정보"를 출력
+    - Ethernet Header의 src mac / dst mac
+    - IP Header의 src ip / dst ip
+    - TCP Header의 src port / dst port
+    - Payload(Data)의 hexadecimal value(최대 16바이트까지만)
 
 * 과제 요구 사항에 대한 코드 구성
 
@@ -54,3 +54,7 @@
     - 본인이 구성한 코드가 과제 상세사항에 언급된 "packet의 시작 위치로부터 일일이 바이트를 세며 출력하는 방법"인 것 같음
     - 코드를 구성하면서도 이러한 방법이 비효율적인 느낌이 들었으나, 해결책을 찾지는 못함
  
+* 과제 결과
+  - 과제에서 요구하는 출력 결과는 모두 만족시킴
+  - 추가적으로 Ethernet Type과 IP Version and Header를 함께 출력함
+  - Wireshark와 대조한 결과 출력 결과가 올바른 것으로 확인
