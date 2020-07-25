@@ -69,12 +69,12 @@ void pcap_KCJ(const u_char* packet)
 	// memcpy packet[14]
 	memcpy(&ip_hdr.ip_ver_hl, packet+14, 1);
 	printf("\nIP Version and Header length : "); // to do : split version / header length 
-	printf("%02x ", ip_hdr.ip_ver_hl);
+	printf("%#x ", ip_hdr.ip_ver_hl);
 	// Split IP Version and Header Length(packet[14]) in two bytes -> IP Version / IP Header Length(*4)
 	uint8_t ip_hl = (ip_hdr.ip_ver_hl % 16) * 4; 
 	uint8_t ip_ver = ip_hdr.ip_ver_hl / 16;
-	printf("\nIP Version : %u\n", ip_ver);
-	printf("IP Header Length : %u\n", ip_hl); 
+	printf("\nIP Version(Decimal Number) : %u\n", ip_ver);
+	printf("IP Header Length(Decimal Number) : %u\n", ip_hl); 
 	
 	// memcpy packet[26]~packet[29]
 	memcpy(ip_hdr.src_ip, packet+26, 4);
