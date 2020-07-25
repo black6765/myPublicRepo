@@ -1,4 +1,4 @@
-// [BOB][Kim Cheong-Jun][pcap-programming]
+// [BOB9][Kim Cheong-Jun][pcap-programming]
 
 #include <pcap.h>
 #include <stdio.h>
@@ -25,7 +25,9 @@ struct ipv4_hdr
     uint8_t ip_ver_hl; // Version and IHL : Locate packet[14]
     uint8_t src_ip[IP_ADDR_LEN]; // Source IP Address : Locate packet[26]~packet[29]
     uint8_t dest_ip[IP_ADDR_LEN]; // Destination IP Address : Locate packet[30]~packet[33]
-    uint16_t total_len; // 
+   /*
+   uint16_t total_len; // Debug : For Calculating TCP Payload Length 
+   */
 };
 
 struct tcp_hdr
