@@ -11,10 +11,12 @@
   - Payload(Data)의 hexadecimal value(최대 16바이트까지만)
 
 * 과제 요구 사항에 대한 코드 구성
-  0. 수업 시간의 내용과 "Wireshark"를 통해 TCP 패킷만을 필터링하여 정보 획득(각 바이트의 정보)
-  1. TCP 패킷은 0x17(23) 위치에 "0x06" 패킷을 가지는 것을 확인
+
+  - 수업 시간의 내용과 "Wireshark"를 통해 TCP 패킷만을 필터링하여 정보 획득(각 바이트의 정보)
+  
+  - TCP 패킷은 0x17(23) 위치에 "0x06" 패킷을 가지는 것을 확인
     -> "if(packet[23] != 0x06)" 구문을 이용해 "과제 요구 사항 1."의 TCP 패킷이 잡히는 경우만을 만족
-  2. TCP 패킷에서 각 바이트가 가지는 의미를 분석함
+  - TCP 패킷에서 각 바이트가 가지는 의미를 분석함
     - Ethernet Header
       - src mac : 6~11
       - det mac : 0~5
@@ -30,9 +32,10 @@
       - dst port : 36~37
       - Payload  : 54~69
   
-  3. 과제에서 요구하진 않았지만 Ethernet Type과 IP Version and Header를 함께 출력함
+  - 과제에서 요구하진 않았지만 Ethernet Type과 IP Version and Header를 함께 출력함
 
 * 과제 중 애로사항
+
   - packet에 있는 정보를 그대로 출력할 것인가?
     - packet의 정보를 바로 출력하는 방법도 있지만, 각 데이터를 분할하여 저장하는게 좀 더 효율적이라고 봄(과제 외의 경우)
     - 각 헤더에 맞는 구조체를 만들어서 memcpy를 이용하여 복사한 후 출력하도록 함
