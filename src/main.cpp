@@ -4,6 +4,7 @@
 #include "arphdr.h"
 #include "find_attacker_mac.h"
 #include "find_attacker_ip.h"
+
 #pragma pack(push, 1)
 struct EthArpPacket {
 	EthHdr eth_;
@@ -21,7 +22,7 @@ int main(int argc, char* argv[]) {
 		usage();
 		return -1;
 	}
-
+	int i = 0;
 	char* dev = argv[1];
 	char errbuf[PCAP_ERRBUF_SIZE];
 	pcap_t* handle = pcap_open_live(dev, BUFSIZ, 1, 1000, errbuf);
@@ -30,6 +31,7 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 	char attacker_mac[20];
+	char sender_mac[20];
 	char attacker_ip[40];
 	// find attacker's mac address
 	find_mac(attacker_mac, argv); 
@@ -37,7 +39,10 @@ int main(int argc, char* argv[]) {
 	printf("My MAC : %s\n", attacker_mac);
 	find_ip(attacker_ip, argv);
 	printf("My IP : %s\n", attacker_ip);
+	///////////////////////////////////////////////
+  	
 	
+
 	EthArpPacket packet;
 	
 	packet.eth_.dmac_ = Mac("ff:ff:ff:ff:ff:ff");
@@ -52,7 +57,36 @@ int main(int argc, char* argv[]) {
         packet.arp_.smac_ = Mac(attacker_mac);
         packet.arp_.sip_ = htonl(Ip(attacker_ip));
         packet.arp_.tmac_ = Mac("00:00:00:00:00");
-        packet.arp_.tip_ = htonl(Ip(argv[3]));
+        packet.arp_.tip_ = htonl(Ip(argv[2]));	
+	
+   	while (true) {
+
+        struct pcap_pkthdr* header;
+        const u_char* packet;
+
+        int res = pcap_next_ex(handle, &header, &packet);
+        if (res == 0) continue;
+        if (res == -1 || res == -2) {
+            printf("pcap_next_ex return %d(%s)\n", res, pcap_geterr(handle));
+            break;
+        }
+
+	// Check TCP Packet
+        if(packet[12] != 0x08 && packet[13] == 0x06)
+        	continue;
+        
+	// Print TCP Packet Information
+        for(i=0; i<6; i++)
+		printf("%x:", packet[i+6]);
+        
+        // Print Captured Bytes 
+        printf("\n\n%u bytes captured\n", header->caplen);
+        break;
+        printf("\n====================================================\n");
+    }
+    
+    printf("%s", sender_mac);
+ 
 
 	
 	/*
