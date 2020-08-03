@@ -1,8 +1,8 @@
 # send-arp-test
 
-sprintf를 통한 숫자 -> 문자열로 변환 과정 도중 
+* sprintf를 통한 숫자 -> 문자열로 변환 과정 도중 
 MAC 주소에 0이 누락되는 버그 수정(20200803 / 23:39) : my_arp.cpp의 arp_request 함수(my_arp.cpp - Line 64)
-=====
+
 
 프로그램 구성 의도
 =====
