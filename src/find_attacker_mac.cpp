@@ -5,13 +5,13 @@
 #include <stdio.h>
 #include <string.h>
 
-void find_mac(char attacker_mac[])
+void find_mac(char attacker_mac[], char *argv[])
 {
     struct ifreq s;
     int fd = socket(PF_INET, SOCK_DGRAM, IPPROTO_IP);
     char temp[10];
- 
-    strcpy(s.ifr_name, "eth0");
+
+    strcpy(s.ifr_name, argv[1]);
     if (0 == ioctl(fd, SIOCGIFHWADDR, &s)) 
     {
         int i = 0;
@@ -22,5 +22,4 @@ void find_mac(char attacker_mac[])
         }
         attacker_mac[17] = '\0';
     }
-    printf("%s", attacker_mac);
 }

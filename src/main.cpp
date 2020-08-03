@@ -2,7 +2,8 @@
 #include <pcap.h>
 #include "ethhdr.h"
 #include "arphdr.h"
-
+#include "find_attacker_mac.h"
+#include "find_attacker_ip.h"
 #pragma pack(push, 1)
 struct EthArpPacket {
 	EthHdr eth_;
@@ -11,12 +12,12 @@ struct EthArpPacket {
 #pragma pack(pop)
 
 void usage() {
-	printf("syntax: send-arp-test <interface>\n");
-	printf("sample: send-arp-test wlan0\n");
+	printf("syntax: send-arp-test <interface> <sender ip> <target ip>\n");
+	printf("sample: send-arp-test wlan0 192.168.10.2 192.168.10.1\n");
 }
 
 int main(int argc, char* argv[]) {
-	if (argc != 2) {
+	if (argc != 4) {
 		usage();
 		return -1;
 	}
@@ -28,27 +29,53 @@ int main(int argc, char* argv[]) {
 		fprintf(stderr, "couldn't open device %s(%s)\n", dev, errbuf);
 		return -1;
 	}
-
+	char attacker_mac[20];
+	char attacker_ip[40];
+	// find attacker's mac address
+	find_mac(attacker_mac, argv); 
+	// print attacker's mac address
+	printf("%s", attacker_mac);
+	find_ip(attacker_ip, argv);
+	printf("%s", attacker_ip);
+	/*
 	EthArpPacket packet;
+	
+	packet.eth_.dmac_ = Mac(ff:ff:ff:ff:ff:ff);
+        packet.eth_.smac_ = Mac(attacker_mac);
+        packet.eth_.type_ = htons(EthHdr::Arp);
 
-	packet.eth_.dmac_ = Mac("00:0c:29:f7:2e:95");
-	packet.eth_.smac_ = Mac("66:7b:ce:12:a5:ca");
+        packet.arp_.hrd_ = htons(ArpHdr::ETHER);
+        packet.arp_.pro_ = htons(EthHdr::Ip4);
+        packet.arp_.hln_ = Mac::SIZE;
+        packet.arp_.pln_ = Ip::SIZE;
+        packet.arp_.op_ = htons(ArpHdr::Request);
+        packet.arp_.smac_ = Mac(attacker_mac);
+        packet.arp_.sip_ = htonl(Ip(argv[3]));
+        packet.arp_.tmac_ = Mac(sender_mac);
+        packet.arp_.tip_ = htonl(Ip(argv[2]));
+
+	*/
+	/*
+	packet.eth_.dmac_ = Mac(sender_mac);
+	packet.eth_.smac_ = Mac(attacker_mac);
 	packet.eth_.type_ = htons(EthHdr::Arp);
 
 	packet.arp_.hrd_ = htons(ArpHdr::ETHER);
 	packet.arp_.pro_ = htons(EthHdr::Ip4);
 	packet.arp_.hln_ = Mac::SIZE;
 	packet.arp_.pln_ = Ip::SIZE;
-	packet.arp_.op_ = htons(ArpHdr::Request);
-	packet.arp_.smac_ = Mac("66:7b:ce:12:a5:ca");
-	packet.arp_.sip_ = htonl(Ip("192.168.43.66"));
-	packet.arp_.tmac_ = Mac("00:0c:29:f7:2e:95");
-	packet.arp_.tip_ = htonl(Ip("192.168.43.112"));
+	packet.arp_.op_ = htons(ArpHdr::Reply);
+	packet.arp_.smac_ = Mac(attacker_mac);
+	packet.arp_.sip_ = htonl(Ip(argv[3]));
+	packet.arp_.tmac_ = Mac(sender_mac);
+	packet.arp_.tip_ = htonl(Ip(argv[2]));
+	*/
 
+	/*	
 	int res = pcap_sendpacket(handle, reinterpret_cast<const u_char*>(&packet), sizeof(EthArpPacket));
 	if (res != 0) {
 		fprintf(stderr, "pcap_sendpacket return %d error=%s\n", res, pcap_geterr(handle));
 	}
-
+	*/
 	pcap_close(handle);
 }
