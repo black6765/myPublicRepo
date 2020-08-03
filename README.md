@@ -1,6 +1,6 @@
 # send-arp-test
 
-* sprintf를 통한 숫자 -> 문자열로 변환 과정 도중 
+* 특정 조건에서 sprintf를 통한 숫자 -> 문자열로 변환 과정 도중 
 MAC 주소에 0이 누락되는 버그 수정(20200803 / 23:39) : my_arp.cpp의 arp_request 함수(my_arp.cpp - Line 64)
 
 
@@ -42,7 +42,7 @@ MAC 주소에 0이 누락되는 버그 수정(20200803 / 23:39) : my_arp.cpp의 
   - ARP 캐시 테이블 Infection은 ARP Reply를 Sender에게 보내 자신(Attacker)의 MAC 주소를 게이트웨이로 착각하게 하는 공격이라고 파악
     - 이에 따라 적절히 코드를 작성
     
-* sprintf를 통한 숫자 -> 문자열로 변환 과정 도중 MAC 주소에 0이 누락되는 버그 수정(20200803 / 23:39) : my_arp.cpp의 arp_request 함수(my_arp.cpp - Line 64)
+* 특정 조건에서 sprintf를 통한 숫자 -> 문자열로 변환 과정 도중 MAC 주소에 0이 누락되는 버그 수정(20200803 / 23:39) : my_arp.cpp의 arp_request 함수(my_arp.cpp - Line 64)
   - 서식을 %02x:로 변경하여 해결
     
 3. 실행 결과
