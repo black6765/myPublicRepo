@@ -21,7 +21,7 @@ void find_ip(char attacker_ip[], char* argv[])
         printf("Error");
     }
     else
-    {
+    {	// Assign Attacker's IP address
         inet_ntop(AF_INET, ifr.ifr_addr.sa_data + 2, attacker_ip, sizeof(struct sockaddr));
     }
 }

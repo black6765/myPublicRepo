@@ -106,6 +106,6 @@ void arp_reply(const char attacker_ip[], const char attacker_mac[], char sender_
 	}
 	else
 	{
-		printf("ARP Infection Complete\n");
+		printf("ARP Cache Table Infection Complete\n");
 	}
 }
