@@ -61,7 +61,7 @@ void arp_request(const char attacker_ip[], const char attacker_mac[], char sende
 			// Convert Number to String and Strcpy array 'sender_mac'
 			for (i = 0; i < 6; i++)
 			{
-				sprintf(temp, "%x:", packet[i + 6]);
+				sprintf(temp, "%02x:", packet[i + 6]);
 				strcpy(sender_mac + i * 3, temp);
 			}
 			sender_mac[17] = '\0';
