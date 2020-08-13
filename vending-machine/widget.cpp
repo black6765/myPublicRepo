@@ -63,7 +63,7 @@ void Widget::on_pbReset_clicked()
     int cntFifth = 0;
     int cntTen = 0;
 
-    // Calculate change by Easy Change Algorithm(Not use greedy)
+    // Calculate change by Greedy Algorithm
     while(money >= 500)
     {
         money -= 500;

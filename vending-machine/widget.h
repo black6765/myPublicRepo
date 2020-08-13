@@ -29,7 +29,7 @@ public:
         money += diff;
         ui.lcdNumber->display(money);
 
-        // Enable and Unable Button
+        // Enable and Unable Button depend on money
         if(money >= COFFEE_VAL)
             ui.pbCoffee->setEnabled(true);
         else
