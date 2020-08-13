@@ -12,7 +12,7 @@
 ## 2. 구현
   - QtCreator를 이용헤 GUI를 구현함
   - money에 값을 더해주는 것과, ui를 display 하는 기능들은 반복적인 기능으로, 수업시간에 언급하셨듯 widget.h에 하나의 changeMoney 함수로 만들어서 사용함
-  - changeMoney 함수에 #define을 통해 정의된 각 상품들의 가격을 if 문으로 비교하여 버튼을 비활성화 시킴 : setEnabled(false)
+  - changeMoney 함수에 #define을 통해 정의된 각 상품들의 가격을 if 문으로 비교하여 버튼을 비활성화 시킴 : `setEnabled(false)`
     - 한 번 비활성화 된 버튼이 다시 활성화되지 않는 문제 : if와 else문을 통해 비교하면서 각 상황에 따라 버튼을 활성/비활성화
     - Reset 버튼에 출력 : sprint를 통해 각 거스름돈의 내용을 temp에 저장한 후 m.information을 이용해 출력함
   - Reset 버튼을 통해 거스름 돈을 계산하는 것은 while문과 - 연산을 이용한 간단한 그리디 알고리즘으로 구현
@@ -25,20 +25,20 @@
   - ARP 스푸핑으로 고통받던 두뇌를 마사지하는 기분(멘토님 감사합니다)
 
 ## 4. Qt Creator에서 실행이 안될 때 다음 명령어를 실행
-`# g++`
-'''sudo apt install g++'''
+#. g++
+`sudo apt install g++`
 
-# libpcap-dev
-sudo apt install libpcap-dev
+(&#35;) libpcap-dev
+`sudo apt install libpcap-dev`
 
 # libssl-dev
-sudo apt install libssl-dev
+`sudo apt install libssl-dev`
 
 # opengl
-sudo apt install libglu1-mesa-dev
+`sudo apt install libglu1-mesa-dev`
 
 # libnetfilter-queue
-sudo apt install libnetfilter-queue-dev
+`sudo apt install libnetfilter-queue-dev`
 
 # google test
-sudo apt install libgtest-dev
+`sudo apt install libgtest-dev`
