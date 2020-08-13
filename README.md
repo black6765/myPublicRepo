@@ -23,3 +23,22 @@
   - C++에 익숙하지 않아 몇 가지 막히는 부분이 있었지만, 과제 자체의 난이도가 낮기 때문에 금방 해결함
   - Qt Creator를 이용해보긴 하였으나, 모든 코딩 과정을 Qt로 해보는 것은 처음이라서 새로운 경험이 되었음(아주 편함)
   - ARP 스푸핑으로 고통받던 두뇌를 마사지하는 기분(멘토님 감사합니다)
+
+## 4. Qt Creator에서 실행이 안될 때 다음 명령어를 실행
+# g++
+sudo apt install g++
+
+# libpcap-dev
+sudo apt install libpcap-dev
+
+# libssl-dev
+sudo apt install libssl-dev
+
+# opengl
+sudo apt install libglu1-mesa-dev
+
+# libnetfilter-queue
+sudo apt install libnetfilter-queue-dev
+
+# google test
+sudo apt install libgtest-dev
