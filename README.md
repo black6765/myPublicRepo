@@ -25,10 +25,10 @@
   - ARP 스푸핑으로 고통받던 두뇌를 마사지하는 기분(멘토님 감사합니다)
 
 ## 4. Qt Creator에서 실행이 안될 때 다음 명령어를 실행
-&#35; g++
+&#35; g++<br/>
 `sudo apt install g++`
 
-&#35; libpcap-dev
+&#35; libpcap-dev<br/>
 `sudo apt install libpcap-dev`
 
 &#35; libssl-dev
