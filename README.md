@@ -31,14 +31,14 @@
 &#35; libpcap-dev<br/>
 `sudo apt install libpcap-dev`
 
-&#35; libssl-dev
+&#35; libssl-dev<br/>
 `sudo apt install libssl-dev`
 
-&#35; opengl
+&#35; opengl<br/>
 `sudo apt install libglu1-mesa-dev`
 
-&#35; libnetfilter-queue
+&#35; libnetfilter-queue<br/>
 `sudo apt install libnetfilter-queue-dev`
 
-&#35; google test
+&#35; google test<br/>
 `sudo apt install libgtest-dev`
