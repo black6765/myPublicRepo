@@ -5,7 +5,7 @@ alert tcp any any -> any 80 (msg:"gilgil.net access"; content:"GET /"; content:"
 alert tcp any any -> any 443 (msg:"google.com access"; flow:established; tls_sni; content:"google.com"; sid:10002; rev:1;)
 
 # naver.com:443
-alert tcp any any -> any 443 (msg:"naver.com access"; flow:established; tls_sni; tls_sni; content:"naver.com"; sid:10003; rev:1;)
+alert tcp any any -> any 443 (msg:"naver.com access"; flow:established; tls_sni; content:"naver.com"; sid:10003; rev:1;)
 
 # netflix.com:443
 alert tcp any any -> any 443 (msg:"netflix.com access"; flow:established; tls_sni; content:"netflix.com"; sid:10004; rev:1;)
