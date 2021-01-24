@@ -1,0 +1,59 @@
+# gilgil.net:80
+alert tcp any any -> any 80 (msg:"gilgil.net access"; content:"GET /"; content:"Host: "; content:"gilgil.net"; sid:10001; rev:1;)
+
+# google.com:443
+alert tcp any any -> any 443 (msg:"google.com access"; flow:established; tls_sni; content:"google.com"; sid:10002; rev:1;)
+
+# naver.com:443
+alert tcp any any -> any 443 (msg:"naver.com access"; flow:established; tls_sni; content:"naver.com"; sid:10003; rev:1;)
+
+# netflix.com:443
+alert tcp any any -> any 443 (msg:"netflix.com access"; flow:established; tls_sni; content:"netflix.com"; sid:10004; rev:1;)
+
+# kitribob.kr:443
+alert tcp any any -> any 443 (msg:"kitribob.kr access"; flow:established; tls_sni; content:"kitribob.kr"; sid:10005; rev:1;)
+
+# kisa.or.kr:443
+alert tcp any any -> any 443 (msg:"kisa.or.kr access"; flow:established; tls_sni; content:"kisa.or.kr"; sid:10006; rev:1;)
+
+# kernel.org:443
+alert tcp any any -> any 443 (msg:"kernel.org access"; flow:established; tls_sni; content:"kernel.org"; sid:10007; rev:1;)
+
+# github.com:443
+alert tcp any any -> any 443 (msg:"github.com access"; flow:established; tls_sni; content:"github.com"; sid:10008; rev:1;)
+
+# youtube.com:443
+alert tcp any any -> any 443 (msg:"youtube.com access"; flow:established; tls_sni; content:"youtube.com"; sid:10009; rev:1;)
+
+# daum.net:443
+alert tcp any any -> any 443 (msg:"daum.net access"; flow:established; tls_sni; content:"daum.net"; sid:10010; rev:1;)
+
+# black6765.github.io:443
+alert tcp any any -> any 443 (msg:"black6765.github.io access"; flow:established; tls_sni; content:"black6765.github.io"; sid:10011; rev:1;)
+
+# q-net.or.kr:443
+alert tcp any any -> any 443 (msg:"q-net.or.kr access"; flow:established; tls_sni; content:"q-net.or.kr"; sid:10012; rev:1;)
+
+# amazon.com:443
+alert tcp any any -> any 443 (msg:"amazon.com access"; flow:established; tls_sni; content:"amazon.com"; sid:10013; rev:1;)
+
+# jandi.com:443
+alert tcp any any -> any 443 (msg:"jandi.com access"; flow:established; tls_sni; content:"jandi.com"; sid:10014; rev:1;)
+
+# microsoft.com:443
+alert tcp any any -> any 443 (msg:"microsoft.com access"; flow:established; tls_sni; content:"microsoft.com"; sid:10015; rev:1;)
+
+# apple.com:443
+alert tcp any any -> any 443 (msg:"apple.com access"; flow:established; tls_sni; content:"apple.com"; sid:10016; rev:1;)
+
+# samsung.com:443
+alert tcp any any -> any 443 (msg:"samsung.com access"; flow:established; tls_sni; content:"samsung.com"; sid:10017; rev:1;)
+
+# ibm.com:443
+alert tcp any any -> any 443 (msg:"ibm.com access"; flow:established; tls_sni; content:"ibm.com"; sid:10018; rev:1;)
+
+# att.com:443
+alert tcp any any -> any 443 (msg:"att.com access"; flow:established; tls_sni; content:"att.com"; sid:10019; rev:1;)
+
+# info.cern.ch:80
+alert tcp any any -> any 80 (msg:"info.cern.ch access"; content:"info.cern.ch"; sid:10020; rev:1;)
